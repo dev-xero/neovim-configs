@@ -46,7 +46,17 @@ local plugins = {
         init = function()
             vim.g.rustfmt_autosave = 1
         end
-    }
+    },
+    {
+        "kamykn/spelunker.vim",
+        lazy = false,
+        config = function()
+            vim.g.spelunker_check_type = 2
+            vim.g.spelunker_highlight_type = 135                            vim.g.spelunker_spell_bad_icon = "" 
+            vim.g.spelunker_spell_good_icon = ""
+            vim.g.spelunker_spell_auto_enable = 1
+        end,
+    },
 }
 
 return plugins
