@@ -52,9 +52,28 @@ local plugins = {
         lazy = false,
         config = function()
             vim.g.spelunker_check_type = 2
-            vim.g.spelunker_highlight_type = 135                            vim.g.spelunker_spell_bad_icon = "" 
-            vim.g.spelunker_spell_good_icon = ""
             vim.g.spelunker_spell_auto_enable = 1
+        end,
+    },
+    {
+        'sbdchd/neoformat',
+        lazy = false,
+        cmd = 'Neoformat',
+        config = function()
+            vim.g.neoformat_enabled_javascript = {'prettier'}
+            vim.g.neoformat_enabled_typescript = {'prettier'}
+            vim.g.neoformat_enabled_css = {'prettier'}
+            vim.g.neoformat_enabled_json = {'prettier'}
+            vim.g.neoformat_enabled_html = {'prettier'}
+            vim.g.neoformat_enabled_markdown = {'prettier'}
+            vim.g.neoformat_enabled_yaml = {'prettier'}
+
+            vim.cmd([[
+                augroup fmt
+                    autocmd!
+                    autocmd BufWritePre *.js,*.jsx,*.ts,*.tsx,*.css,*.scss,*.json,*.html,*.md,*.yaml,*.yml Neoformat
+                augroup END
+            ]])
         end,
     },
 }
