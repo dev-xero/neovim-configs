@@ -17,3 +17,15 @@ lspconfig.rust_analyzer.setup({
     }
 })
 
+lspconfig.emmet_ls.setup({
+    on_attach = on_attach,
+    capabilities = capabilities,
+    filetypes = { "html", "css", "typescriptreact", "javascriptreact", "javascript", "typescript" },
+    init_options = {
+        html = {
+            options = {
+                ["bem.enabled"] = true,
+            },
+        },
+    },
+})

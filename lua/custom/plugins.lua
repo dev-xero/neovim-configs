@@ -30,6 +30,7 @@ local plugins = {
                 "codespell",
                 "tailwindcss-language-server",
                 "typescript-language-server",
+                "emmet-ls",
             }
         }
     },
