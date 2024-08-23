@@ -20,6 +20,7 @@ dofile(vim.g.base46_cache .. "defaults")
 vim.opt.rtp:prepend(lazypath)
 require "plugins"
 
+--[[
 vim.g.clipboard = {
   name = 'win32yank',
   copy = {
@@ -32,4 +33,17 @@ vim.g.clipboard = {
   },
   cache_enabled = 0,
 }
+--]]
 
+vim.g.clipboard = {
+  name = 'win32-clip',
+  copy = {
+    ['+'] = 'clip.exe',
+    ['*'] = 'clip.exe',
+  },
+  paste = {
+    ['+'] = 'powershell.exe -noprofile -command Get-Clipboard',
+    ['*'] = 'powershell.exe -noprofile -command Get-Clipboard',
+  },
+  cache_enabled = 0,
+}

@@ -57,8 +57,43 @@ local plugins = {
         end,
     },
     {
+        "jose-elias-alvarez/null-ls.nvim",
+        config = function()
+            local null_ls = require("null-ls")
+            null_ls.setup({
+                sources = {
+                    null_ls.builtins.diagnostics.eslint_d.with({
+                        condition = function(utils)
+                            return utils.root_has_file(".eslintrc.json") or utils.root_has_file(".eslintrc.js")
+                        end,
+                    }),
+                    null_ls.builtins.code_actions.eslint_d,
+                    null_ls.builtins.formatting.eslint_d,
+                },
+                on_attach = function(client, bufnr)
+                    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+                    local opts = { noremap=true, silent=true }
+
+                    buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+                    buf_set_keymap('n', 'gr', '<Cmd>lua vim.lsp.buf.references()<CR>', opts)
+                    buf_set_keymap('n', 'gi', '<Cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+                    buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+                    buf_set_keymap('n', '<leader>lf', '<Cmd>lua vim.lsp.buf.format({ async = true })<CR>', opts)
+
+                    if client.server_capabilities.documentFormattingProvider then
+                        vim.cmd([[
+                            augroup LspFormatting
+                                autocmd! * <buffer>
+                                autocmd BufWritePre <buffer> lua vim.lsp.buf.format({ timeout_ms = 2000 })
+                            augroup END
+                        ]])
+                    end
+                end,
+            })
+        end
+    },
+    {
         'sbdchd/neoformat',
-        lazy = false,
         cmd = 'Neoformat',
         config = function()
             vim.g.neoformat_enabled_javascript = {'prettier'}
